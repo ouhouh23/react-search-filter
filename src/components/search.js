@@ -1,26 +1,32 @@
 import React, {useState} from 'react'
 import {SearchList} from './search-list.js'
 
-export const Search = () => {
-	const [searchConditions, setSearchConditions] = useState('')
-
-	const updateSearch = (event) => {
-		setSearchConditions(event.target.value)
+export class Search extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {searchValue: ''}
+		this.updateSearch = this.updateSearch.bind(this)
 	}
 
-	return (
-		<div className="search">
-			<h1 className="search__heading">
-				You can filter list below using the search input
-			</h1>
+	updateSearch(event)  {
+		this.setState({searchValue: event.target.value})
+	}
 
-			<input type="search" 
-				className="search__input" 
-				placeholder="Search..." 
-				onChange={updateSearch}
-			/>
+	render() {
+		return (
+			<div className="search">
+				<h1 className="search__heading">
+					You can filter list below using the search input
+				</h1>
 
-			<SearchList conditions={searchConditions} />
-		</div>
-		)
+				<input type="search" 
+					className="search__input" 
+					placeholder="Search..." 
+					onChange={this.updateSearch}
+				/>
+
+				<SearchList conditions={this.state.searchValue} />
+			</div>
+			)
+		}
 }

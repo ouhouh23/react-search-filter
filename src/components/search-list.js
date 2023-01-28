@@ -1,23 +1,32 @@
 import React from 'react'
 
-export const SearchList = (props) => {
-	const items = ['apple', 'orange', 'grape', 'pineapple', 'coconut', 'nut', 'mango', 'lime', 'lemon']
-	const filteredItems = items.filter(element => { 
-		if (element.includes(props.conditions)) {
-			return element
-		}
-		else if (props.conditions == '') {
-			return element
-		}
-	})
+export class SearchList extends React.Component {
+	constructor(props) {
+		super(props)
+		this.items = ['apple', 'orange', 'grape', 'pineapple', 'coconut', 'nut', 'mango', 'lime', 'lemon']
+	}
 
-	if (filteredItems.length > 0) {
-		const list = filteredItems.map((element, index) => <li key={index}>{element}</li>)
+	filterItems() {
+		this.filteredItems = this.items.filter(element => { 
+			if (element.includes(this.props.conditions)) {
+				return element
+			}
+			else if (this.props.conditions == '') {
+				return element
+			}
+		})
+	}
 
-		return (
-			<ul className="search__list">
-				{list}
-			</ul>
-			)
+	render()  {
+		this.filterItems()
+
+		if (this.filteredItems.length > 0) {
+			this.list = this.filteredItems.map((element, index) => <li key={index}>{element}</li>)
+				return (
+					<ul className="search__list">
+						{this.list}
+					</ul>
+				)
+		}
 	}
 }
